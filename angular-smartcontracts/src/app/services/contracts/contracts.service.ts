@@ -1,11 +1,11 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import * as Web3 from 'web3';
+const Web3 = require('web3'); // tslint:disable-line
 
 declare let require: any;
 declare let window: any;
 
-let tokenAbi = require('./tokenContract.json');
+const tokenAbi = require('./tokenContract.json');
 
 @Injectable()
 export class ContractsService {
@@ -13,7 +13,7 @@ export class ContractsService {
   private _web3: any;
 
   private _tokenContract: any;
-  private _tokenContractAddress: string = "0xbc84f3bf7dd607a37f9e5848a6333e6c188d926c";
+  private _tokenContractAddress = '0x82811c68e74b171b69754b29c597a498ff167a9c';
 
   constructor() {
     if (typeof window.web3 !== 'undefined') {
@@ -29,7 +29,7 @@ export class ContractsService {
       );
     }
 
-    this._tokenContract = this._web3.eth.contract(tokenAbi).at(this._tokenContractAddress);
+    this._tokenContract = new this._web3.eth.Contract(tokenAbi, this._tokenContractAddress);
   }
 
   private async getAccount(): Promise<string> {
@@ -48,7 +48,7 @@ export class ContractsService {
             return;
           }
           resolve(accs[0]);
-        })
+        });
       }) as string;
 
       this._web3.eth.defaultAccount = this._account;
@@ -58,16 +58,15 @@ export class ContractsService {
   }
 
   public async getUserBalance(): Promise<number> {
-    let account = await this.getAccount();
+    const account = await this.getAccount();
 
     return new Promise((resolve, reject) => {
-      let _web3 = this._web3;
-      this._tokenContract.balanceOf.call(account, function (err, result) {
-        if(err != null) {
+      this._tokenContract.methods.balanceOf(account).call(function (err, result) {
+        if (err != null) {
           reject(err);
         }
 
-        resolve(_web3.fromWei(result));
+        return resolve(result);
       });
     }) as Promise<number>;
   }
