@@ -13,7 +13,7 @@ export class ContractsService {
   private _web3: any;
 
   private _tokenContract: any;
-  private _tokenContractAddress = '0x82811c68e74b171b69754b29c597a498ff167a9c';
+  private _tokenContractAddress = '0x2ef76b22c586843d69d0b4eed1b6b72df2e6623f'; // '0x82811c68e74b171b69754b29c597a498ff167a9c';
 
   constructor() {
     if (typeof window.web3 !== 'undefined') {
@@ -60,14 +60,37 @@ export class ContractsService {
   public async getUserBalance(): Promise<number> {
     const account = await this.getAccount();
 
+    return this.getBalanceOf(account);
+  }
+
+  public async getBalanceOf(account): Promise<number> {
     return new Promise((resolve, reject) => {
-      this._tokenContract.methods.balanceOf(account).call(function (err, result) {
+      this._tokenContract.methods.balanceOf(account).call((err, result) => {
         if (err != null) {
           reject(err);
         }
 
         return resolve(result);
       });
+    }) as Promise<number>;
+  }
+
+  public async transferFrom(from, to, amount): Promise<number> {
+    /*const a = new Promise((resolve, reject) => {
+      return this._tokenContract.methods.name().call(function (err, result) {
+        if (err != null) {
+          reject(err);
+        }
+
+        console.log('!!!!!!!!' + result);
+      });
+    });*/
+
+    return new Promise((resolve, reject) => {
+      return this._tokenContract.methods.transfer(to, amount)
+        .send({from: from}).then( function (err, transactionHash) {
+          console.log('@@@@@@' + transactionHash);
+        });
     }) as Promise<number>;
   }
 }

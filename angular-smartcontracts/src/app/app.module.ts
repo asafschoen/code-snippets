@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import {ContractsService} from "./services/contracts/contracts.service";
+import {ContractsService} from './services/contracts/contracts.service';
 
 
 @NgModule({
