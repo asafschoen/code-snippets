@@ -9,7 +9,7 @@ const tokenAbi = require('./tokenContract.json');
 
 @Injectable()
 export class ContractsService {
-  private _account: string = null;
+  public _account: string = null;
   private _web3: any;
 
   private _tokenContract: any;
@@ -32,7 +32,7 @@ export class ContractsService {
     this._tokenContract = new this._web3.eth.Contract(tokenAbi, this._tokenContractAddress);
   }
 
-  private async getAccount(): Promise<string> {
+  public async getAccount(): Promise<string> {
     if (this._account == null) {
       this._account = await new Promise((resolve, reject) => {
         this._web3.eth.getAccounts((err, accs) => {

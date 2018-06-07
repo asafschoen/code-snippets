@@ -20,4 +20,30 @@
 
 </ul>
 
+<table id="accountsTable">
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Email</th>
+  <th>Hash</th>
+  <th>Balance</th>
+  <th>Transfer</th>
+</tr>
+</thead>
+
+<tbody>
+<tr *ngFor="let account of accounts" [class.active-user]="account === userAccount" [class.stam-user]="account !== userAccount">
+  <td>{{account.name}}</td>
+  <td>{{account.id}}</td>
+  <td>{{account.hash}}</td>
+  <td>{{account.balance}}</td>
+  <td class="transfer"><button>Transfer</button>
+    <label for="transferInput">Amount: </label>
+      <input id="transferInput"/>
+  </td>
+
+</tr>
+</tbody>
+</table>
+
 <button (click)="transferToShimon()">Transfer!</button>

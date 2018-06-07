@@ -1,0 +1,8 @@
+#accountsTable .active-user {
+  color: blue;
+}
+
+#accountsTable .active-user .transfer {
+  display: none;
+}
+
