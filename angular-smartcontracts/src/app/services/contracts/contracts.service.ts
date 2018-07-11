@@ -76,16 +76,6 @@ export class ContractsService {
   }
 
   public async transferFrom(from, to, amount): Promise<number> {
-    /*const a = new Promise((resolve, reject) => {
-      return this._tokenContract.methods.name().call(function (err, result) {
-        if (err != null) {
-          reject(err);
-        }
-
-        console.log('!!!!!!!!' + result);
-      });
-    });*/
-
     return new Promise((resolve, reject) => {
       return this._tokenContract.methods.transfer(to, amount)
         .send({from: from}).then( function (err, transactionHash) {

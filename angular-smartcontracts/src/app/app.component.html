@@ -1,49 +1,44 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <h1>
-    Calling contracts with web3 in Angular.
+    F5 Coin
   </h1>
-  <img width="300" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+  <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f9/F5_Networks_logo.svg/1200px-F5_Networks_logo.svg.png" height="200">
 </div>
 
 <h2>
   Value from contract
 </h2>
-<ul>
-  <li>
-    Your Balance: <span>{{balance}}</span>
-  </li>
-  <li>
-    Shimon Balance: <span>{{shimonBalance}}</span>
-  </li>
-
-
-</ul>
+<h3>
+  <a target="_blank" href="https://rinkeby.etherscan.io/token/0x2ef76b22c586843d69d0b4eed1b6b72df2e6623f">
+    (F5 Token on Etherscan)
+  </a>
+</h3>
 
 <table id="accountsTable">
-<thead>
-<tr>
-  <th>Name</th>
-  <th>Email</th>
-  <th>Hash</th>
-  <th>Balance</th>
-  <th>Transfer</th>
-</tr>
-</thead>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Hash</th>
+    <th>Balance</th>
+    <th>Transfer</th>
+  </tr>
+  </thead>
 
-<tbody>
-<tr *ngFor="let account of accounts" [class.active-user]="account === userAccount" [class.stam-user]="account !== userAccount">
-  <td>{{account.name}}</td>
-  <td>{{account.id}}</td>
-  <td>{{account.hash}}</td>
-  <td>{{account.balance}}</td>
-  <td class="transfer"><button>Transfer</button>
-    <label for="transferInput">Amount: </label>
-      <input id="transferInput"/>
-  </td>
+  <tbody>
+  <tr *ngFor="let account of accounts" [class.active-user]="account === userAccount"
+      [class.stam-user]="account !== userAccount">
+    <td>{{account.name}}</td>
+    <td>{{account.id}}</td>
+    <td>{{account.hash}}</td>
+    <td>{{account.balance}}</td>
+    <td class="transfer">
+      <label for="transferInput">Amount: </label>
+      <input #transferAmount id="transferInput" maxlength="4" size="4" type="number" ngModel="account.transferAmount"/>
+      <button (click)="transfer(userAccount.hash,  account.hash, transferAmount.value)">Transfer!</button>
+    </td>
 
-</tr>
-</tbody>
+  </tr>
+  </tbody>
 </table>
-
-<button (click)="transferToShimon()">Transfer!</button>
